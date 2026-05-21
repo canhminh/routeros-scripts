@@ -2,8 +2,7 @@ name: Generate MikroTik Full Playlists
 
 on:
   schedule:
-    # 1:05 AM UTC = 8:05 AM Vietnam Time (ICT)
-    - cron: '5 1 * * *'
+    - cron: '5 1 * * *' # 8:05 AM Vietnam Time
   workflow_dispatch:
 
 jobs:
@@ -11,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    
+    # FIX 1: Force all internal JavaScript actions to run on Node 24
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout main branch
@@ -19,7 +22,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # FIX 2: Upgrade your custom generation script execution to Node 24
+          node-version: 24
 
       - name: Generate Full Playlists
         run: node generate.js
