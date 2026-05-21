@@ -1,0 +1,41 @@
+name: Generate MikroTik Full Playlists
+
+on:
+  schedule:
+    # 1:05 AM UTC = 8:05 AM Vietnam Time (ICT)
+    - cron: '5 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate Full Playlists
+        run: node generate.js
+
+      - name: Push Static Scripts to Data Branch
+        run: |
+          mkdir publish_dir
+          cp vn_ips.rsc blacklist.rsc publish_dir/
+          cd publish_dir
+          
+          git init
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git add .
+          git commit -m "Static Playlist Update"
+          
+          git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          git push origin HEAD:data --force
