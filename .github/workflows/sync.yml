@@ -2,7 +2,8 @@ name: Generate MikroTik Full Playlists
 
 on:
   schedule:
-    - cron: '5 1 * * *' # 8:05 AM Vietnam Time
+    - cron: '5 8 * * *'
+      timezone: 'Asia/Ho_Chi_Minh'
   workflow_dispatch:
 
 jobs:
