@@ -36,7 +36,7 @@ async function fetchAndGenerate(listName, url, scoreLimit) {
 }
 
 async function run() {
-  const VN_URL = "https://raw.githubusercontent.com/herrbischoff/country-ip-blocks/master/ipv4/vn.cidr";
+  const VN_URL = "https://raw.githubusercontent.com/HackingGate/Country-IP-Blocks/refs/heads/gh-pages/VN_IPv4.txt";
   const IPSUM_URL = "https://raw.githubusercontent.com/stamparm/ipsum/master/ipsum.txt";
 
   // Generate both scripts
